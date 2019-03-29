@@ -1,0 +1,72 @@
+h2#home-content {
+    font-size: 222%;
+    text-align: center;
+    margin-top: 4em;
+    margin-bottom: 2em;
+}
+
+div#container {
+    margin: 0 auto;
+    height: 20em;
+    min-width: 20em;
+    max-width: 30em;
+}
+
+div.hot-data {
+    text-align: center;
+    margin-top: 2em;
+}
+
+div#about-me-icon ul{
+    display: flex;
+    flex-direction: column;
+}
+
+.button-about-me {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: rgb(197, 194, 194);
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 28px;
+    padding: 20px;
+    width: 200px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 0px;
+  }
+  
+  .button-about-me span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  
+  .button-about-me span:after {
+    content: '^_~';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -10px;
+    transition: 0.5s;
+  }
+  
+  .button-about-me:hover span {
+    padding-right: 65px;
+  }
+  
+  .button-about-me:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+
+  div.hidden-xs col-sm-4 col-md-3 col-lg-2{
+    float: right !important;
+  }
+
+  div.pull-right{
+      position: relative;
+      left: 300px;
+  }

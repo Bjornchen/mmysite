@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+我的网站|首页
+{% endblock %}
+
+{% block header_extends %}
+<link rel="stylesheet" href="{% static 'home.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+<script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+{% endblock %}
+
+{% block nav_home_active %}active{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-md-9 col-lg-10">
+            <h2 class="animated jello delay-0s" id="home-content">欢迎访问我的网站，随便看</h2>
+            <!-- 图表容器 DOM -->
+            <div class="animated jackInTheBox delay-0s" id="container"></div>
+            <div class="hot-data">
+                <h3>今天热门博客</h3>
+                <ul>
+                    {% for hot_data in today_hot_data %}
+                    <li><a
+                            href="{% url 'blog_detail' hot_data.content_object.pk %}">{{ hot_data.content_object.title }}</a>({{ hot_data.read_num }})
+                    </li>
+                    {% empty %}
+                    <li>今天暂时没有热门博客</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="hot-data">
+                <h3>昨天热门博客</h3>
+                <ul>
+                    {% for hot_data in yesterday_hot_data %}
+                    <li><a
+                            href="{% url 'blog_detail' hot_data.content_object.pk %}">{{ hot_data.content_object.title }}</a>({{ hot_data.read_num }})
+                    </li>
+                    {% empty %}
+                    <li>昨天暂时没有热门博客</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="hot-data">
+                <h3>7天热门博客</h3>
+                <ul>
+                    {% for hot_blog in hot_blogs_for_7_days %}
+                    <li><a
+                            href="{% url 'blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a>({{ hot_blog.read_num_sum }})
+                    </li>
+                    {% empty %}
+                    <li>昨天暂时没有热门博客</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="hidden-xs col-sm-4 col-md-3 col-lg-2">
+            <div class="pull-right">
+                <button class="button-about-me" style="vertical-align:middle"><span>About me</span></button>
+                <br><br>
+                <div id="about-me-icon" style="text-align: center">
+                    <ul>
+                        <li><a href="https://github.com/Bjornchen"><img src="{% static 'github.svg' %}" alt="github" style="height:60px;width:60px"></a></li>
+                        <br>
+                        <li><a href="https://www.bilibili.com/video/av24171938"><img src="{% static 'bili.png' %}"
+                                    alt="bilibili" style="height:60px;width:60px"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // 图表配置
+    var options = {
+        chart: { type: 'line' },
+        title: { text: null },
+        xAxis: {
+            categories: {{ dates| safe }},   // x 轴分类
+    tickmarkPlacement: 'on',
+        title: { text: '前7日阅读量变化' },
+                    },
+    yAxis: {
+        title: { text: null },
+        labels: { enabled: false },
+        gridLineDashStyle: 'Dash',
+                    },
+    series: [{                              // 数据列
+        name: '阅读量',                     // 数据列名
+        data: {{ read_nums }}               // 数据
+                    }],
+        plotOptions: {
+        line: {
+            dataLabels: {
+                enabled: true
+            }
+        }
+    },
+    legend: { enabled: false },
+    credits: { enabled: false },
+                };
+    // 图表初始化函数
+    var chart = Highcharts.chart('container', options);
+
+
+    $(document).ready(function () {
+        $("button").click(function () {
+            $("#about-me-icon").toggle();
+        });
+    });
+
+</script>
+{% endblock %}
