@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+我的网站|搜索
+{% endblock %}
+
+{% block header_extends %}
+
+{% endblock %}
+
+{% block nav_home_active %}active{% endblock %}
+
+{% block content %}
+   <div class="container">
+       <div class="row">
+           <div class="col-md-8 col-md-offset-2">
+               {% if search_word == '' %}
+               <h3>你没有输入任何内容</h3>
+               {% else %}
+               <h3>搜索"{{ search_word }}",找到{{ searc_vlogs_count }}个结果</h3>
+               <hr>
+               {% for blog in search_blogs %}
+               <a href="{% url 'blog_detail' blog.pk %}"><h4>{{ blog.title }}</h4></a>
+               <p>{{ blog.content | striptags | truncatechars_html:100 }}</p>
+               {% empty %}
+               <p>没有找到内容</p>
+               {% endfor %}
+               {% endif %}
+           </div>
+       </div>
+   </div>
+
+{% endblock %}
